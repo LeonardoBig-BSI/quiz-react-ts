@@ -7,7 +7,8 @@ export default {
     theme: {
       extend: {
         colors: {
-          colorParagraph: '#8435de'
+          colorParagraph: '#8435de',
+          colorBackground: '#8435de'
         },
       },
     },
