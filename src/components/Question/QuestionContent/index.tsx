@@ -21,7 +21,13 @@ const QuestionContent = () => {
     const currentQuestion = quizState.questions[quizState.currentQuestion];
 
     const onSelectOption = (option: string) => {
-        console.log(option);
+        dispatch({
+            type: "CHECK_ANSWER",
+            payload: { 
+                answer: currentQuestion.answer, 
+                option 
+            },
+        });
     }
 
     return (

@@ -5,7 +5,7 @@ import { Button } from "../Button";
 interface OptionAnswerProps {
     option: string;
     answer: string;
-    selectOption: () => void;
+    selectOption: (option: string) => void;
 }
 
 const OptionAnswer = ({ option, answer, selectOption }: OptionAnswerProps) => {
@@ -15,7 +15,7 @@ const OptionAnswer = ({ option, answer, selectOption }: OptionAnswerProps) => {
         throw new Error("QuizContext não foi fornecido.");
     }
 
-    const { state: quizState, dispatch } = quizContext;
+    const { state: quizState } = quizContext;
 
     console.log(quizState);
 
@@ -27,7 +27,16 @@ const OptionAnswer = ({ option, answer, selectOption }: OptionAnswerProps) => {
 
     return (
         <Button.Root
-            className="mb-4 p-4 bg-colorOptionBackground rounded-lg cursor-pointer opacity-80 hover:bg-colorHoverOptionBackground hover:opacity-100 duration-300"
+            className={
+                `mb-4 p-4 bg-colorOptionBackground rounded-lg cursor-pointer opacity-80 hover:bg-colorHoverOptionBackground hover:opacity-100 duration-300
+                ${quizState.answerSelected && option === answer ? 
+                    'bg-colorAnswerCorrect hover:bg-colorAnswerCorrect' : ''
+                }
+                ${quizState.answerSelected && option !== answer ? 
+                    'bg-colorAnswerWrong opacity-50' : ''
+                }    
+                `
+            }
             onClick={() => selectOption(option)}
         >
             <Button.Content

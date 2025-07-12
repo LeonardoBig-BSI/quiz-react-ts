@@ -9,15 +9,23 @@ const initialState = {
     currentQuestion: 0,
     score: 0,
     answerSelected: false,
+    optionSelected: "",
 };
 
 type QuizState = typeof initialState;
 
-type QuizAction = 
+type QuizAction =
     | { type: 'CHANGE_STATE' }
     | { type: 'REORDER_QUESTIONS' }
     | { type: 'CHANGE_QUESTION' }
     | { type: 'NEW_GAME' }
+    | {
+        type: 'CHECK_ANSWER',
+        payload: {
+            answer: string;
+            option: string;
+        }
+    }
 
 const quizReducer = (state: QuizState = initialState, action: QuizAction): QuizState => {
     console.log("State:", state);
@@ -48,7 +56,7 @@ const quizReducer = (state: QuizState = initialState, action: QuizAction): QuizS
             const nextQuestion = state.currentQuestion + 1;
             let endGame: boolean = false;
 
-            if(!questions[nextQuestion]) {
+            if (!questions[nextQuestion]) {
                 endGame = true;
             }
 
@@ -56,11 +64,31 @@ const quizReducer = (state: QuizState = initialState, action: QuizAction): QuizS
                 ...state,
                 currentQuestion: nextQuestion,
                 gameStage: endGame ? STAGES[2] : state.gameStage,
+                answerSelected: false,
+                optionSelected: "",
             }
         }
 
         case "NEW_GAME":
             return initialState;
+
+        case "CHECK_ANSWER": {
+            if (state.answerSelected) return state;
+
+            const answer: string = action.payload.answer;
+            const option: string = action.payload.option;
+            let correctAnswers = 0;
+
+            if (answer === option) correctAnswers += 1;
+
+            return {
+                ...state,
+                score: state.score + correctAnswers,
+                optionSelected: option,
+                answerSelected: true,
+            }
+
+        }
 
         default:
             return state;
