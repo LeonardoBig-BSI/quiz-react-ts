@@ -1,7 +1,7 @@
 import type { ReactNode } from "react"
 
 interface ButtonRootProps {
-  className: string;
+  className?: string;
     onClick?: () => void
     children: ReactNode;
 }

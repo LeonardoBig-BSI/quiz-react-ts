@@ -1,9 +1,11 @@
 import { useContext, useEffect } from 'react'
 import './App.css'
+
 import { Button } from './components/Button'
 import { Welcome } from './components/Welcome'
 import { QuizContext } from './contexts/quiz'
-import Question from './components/Question'
+import { Question } from './components/Question'
+import { GameOver } from './components/GameOver'
 
 function App() {
   const quizContext = useContext(QuizContext);
@@ -38,6 +40,7 @@ function App() {
               onClick={() => dispatch({ type: 'CHANGE_STATE' })}>
               <Button.Content
                 text='Iniciar'
+                className="text-base md:text-2xl lg:text-2xl text-zinc-100 font-bold"
               />
             </Button.Root>
 
@@ -47,7 +50,17 @@ function App() {
         </Welcome.Root>
       )}
 
-      {quizState.gameStage === 'Playing' && <Question />}
+      {quizState.gameStage === 'Playing' && (
+        <Question.Root>
+          <Question.Content />
+        </Question.Root>
+      )}
+
+      {quizState.gameStage === 'End' && (
+        <GameOver.Root>
+          <GameOver.Content />
+        </GameOver.Root>
+      )}
 
     </div>
   )

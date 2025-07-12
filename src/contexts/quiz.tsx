@@ -7,6 +7,8 @@ const initialState = {
     gameStage: STAGES[0],
     questions,
     currentQuestion: 0,
+    score: 0,
+    answerSelected: false,
 };
 
 type QuizState = typeof initialState;
@@ -15,6 +17,7 @@ type QuizAction =
     | { type: 'CHANGE_STATE' }
     | { type: 'REORDER_QUESTIONS' }
     | { type: 'CHANGE_QUESTION' }
+    | { type: 'NEW_GAME' }
 
 const quizReducer = (state: QuizState = initialState, action: QuizAction): QuizState => {
     console.log("State:", state);
@@ -43,11 +46,21 @@ const quizReducer = (state: QuizState = initialState, action: QuizAction): QuizS
 
         case 'CHANGE_QUESTION': {
             const nextQuestion = state.currentQuestion + 1;
+            let endGame: boolean = false;
+
+            if(!questions[nextQuestion]) {
+                endGame = true;
+            }
+
             return {
                 ...state,
-                currentQuestion: nextQuestion
+                currentQuestion: nextQuestion,
+                gameStage: endGame ? STAGES[2] : state.gameStage,
             }
         }
+
+        case "NEW_GAME":
+            return initialState;
 
         default:
             return state;

@@ -8,7 +8,9 @@ export default {
       extend: {
         colors: {
           colorParagraph: '#8435de',
-          colorBackground: '#8435de'
+          colorBackground: '#8435de',
+          colorOptionBackground: '#3c0e70',
+          colorHoverOptionBackground: '#2e085a',
         },
       },
     },
