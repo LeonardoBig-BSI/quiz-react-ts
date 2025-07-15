@@ -12,7 +12,7 @@ export default {
           colorOptionBackground: '#3c0e70',
           colorHoverOptionBackground: '#2e085a',
           colorAnswerCorrect: '#0bfc03',
-          colorAnswerWrong: '#3c0e70'
+          colorAnswerWrong: '#f30f0f'
         },
       },
     },

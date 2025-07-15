@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react'
+import { useContext } from 'react'
 import './App.css'
 
 import { Button } from './components/Button'
@@ -6,6 +6,7 @@ import { Welcome } from './components/Welcome'
 import { QuizContext } from './contexts/quiz'
 import { Question } from './components/Question'
 import { GameOver } from './components/GameOver'
+import { PickCategory } from './components/PickCategory'
 
 function App() {
   const quizContext = useContext(QuizContext);
@@ -15,13 +16,6 @@ function App() {
   }
 
   const { state: quizState, dispatch } = quizContext;
-
-  // console.log(quizState);
-
-  useEffect(() => {
-    //embaralhar as perguntas
-    dispatch({ type: 'REORDER_QUESTIONS' });
-  }, [dispatch]);
 
   return (
     <div className='flex flex-col justify-center items-center text-center pt-12'>
@@ -48,6 +42,12 @@ function App() {
 
           </Welcome.Content>
         </Welcome.Root>
+      )}
+
+      {quizState.gameStage === 'Category' && (
+        <PickCategory.Root>
+          <PickCategory.Content />
+        </PickCategory.Root>
       )}
 
       {quizState.gameStage === 'Playing' && (
